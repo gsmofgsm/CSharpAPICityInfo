@@ -30,6 +30,8 @@ namespace CityInfo.Api
                 app.UseExceptionHandler();
             }
 
+            app.UseStatusCodePages();
+
             app.UseMvc();
         }
     }
