@@ -73,7 +73,7 @@ namespace CityInfo.Api.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState); // ModelState will be deseriallized in the response body
-            }  
+            }
             // the ApiController will do that for us in case of automatic validation by Attribute
             // in case of custom added validation, we do need to check the ModelState
             // because it is already too late for the ApiController to handle this
@@ -105,6 +105,45 @@ namespace CityInfo.Api.Controllers
                 "GetPointOfInterest",
                 new { cityId, id = finalPointOfInterest.Id },
                 finalPointOfInterest);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePointOfInterest(int cityId, int id,
+            [FromBody] PointOfInterestForUpdateDto pointOfInterest)
+        {
+            if (pointOfInterest.Description == pointOfInterest.Name)
+            {
+                ModelState.AddModelError(
+                    "Description",  // key, could be property name, not must
+                    "The provided description should be different from the name");
+            } // add our custom validation in ModelState
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // ModelState will be deseriallized in the response body
+            }
+
+            var city = CityDataStore.Current.Cities
+                .FirstOrDefault(c => c.Id == cityId);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            // find point fo interest
+            var pointOfInterestFromStore = city.PointsOfInterest
+                .FirstOrDefault(p => p.Id == id);
+
+            if (pointOfInterestFromStore == null)
+            {
+                return NotFound();
+            }
+
+            pointOfInterestFromStore.Name = pointOfInterest.Name;
+            pointOfInterestFromStore.Description = pointOfInterest.Description;
+
+            return NoContent();  // successful, nothing to return
         }
     }
 }

@@ -43,3 +43,20 @@ Content-Type: application/json
     Famous cemetery where Jim Morrison and Oscar Wilde are buried. Famous cemetery where Jim Morrison and Oscar Wilde are buried.
     Famous cemetery where Jim Morrison and Oscar Wilde are buried. Famous cemetery where Jim Morrison and Oscar Wilde are buried."
 }
+
+POST http://localhost:5113/api/cities/1/pointsofinterest
+Content-Type: application/json
+
+{
+    "name": "Pere Lachaise",
+    "description": "Pere Lachaise"
+}
+
+
+PUT http://localhost:5113/api/cities/1/pointsofinterest/1
+Content-Type: application/json
+
+{
+  "name": "Update - Central Park",
+  "description": "Update - The most visited urban park in the United States."
+}
