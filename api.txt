@@ -15,3 +15,14 @@ Accept: application/json
 
 GET http://localhost:5113/api/cities
 Accept: application/xml
+
+
+POST http://localhost:5113/api/cities/1/pointsofinterest
+Content-Type: application/json
+
+{
+    "name": "Pere Lachaise",
+    "description": "Famous cemetery where Jim Morrison and Oscar Wilde are buried."
+}
+
+GET http://localhost:5113/api/cities/1/pointsofinterest/7

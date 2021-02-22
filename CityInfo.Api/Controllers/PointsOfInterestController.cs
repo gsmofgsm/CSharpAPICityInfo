@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CityInfo.Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace CityInfo.Api.Controllers
             return Ok(city.PointsOfInterest);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int id)
         {
             var city = CityDataStore.Current.Cities
@@ -46,6 +47,43 @@ namespace CityInfo.Api.Controllers
             }
 
             return Ok(pointOfIntrest);
+        }
+
+        [HttpPost]
+        public IActionResult CreatePointOfInterest(int cityId, 
+            [FromBody] PointOfInterestForCreationDto pointOfInterest) // FromBody is optional, the ApiController takes care of that
+        {
+            //if (pointOfInterest == null)
+            //{
+            //    return BadRequest();
+            //} // this is taken care of by ApiController Attribute
+
+            var city = CityDataStore.Current.Cities
+                .FirstOrDefault(c => c.Id == cityId);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            // next we need to map from a PointOfInterestForCreationDto to PointOfInterestDto
+            // to have the id of it
+            // demo purpose - to be improved
+            var maxPointOfInterestId = CityDataStore.Current.Cities.SelectMany(
+                        c => c.PointsOfInterest).Max(p => p.Id);
+
+            var finalPointOfInterest = new PointOfInterestDto()
+            {
+                Id = ++maxPointOfInterestId,
+                Name = pointOfInterest.Name,
+                Description = pointOfInterest.Description
+            };
+
+            city.PointsOfInterest.Add(finalPointOfInterest);
+            return CreatedAtRoute(
+                "GetPointOfInterest",
+                new { cityId, id = finalPointOfInterest.Id },
+                finalPointOfInterest);
         }
     }
 }
