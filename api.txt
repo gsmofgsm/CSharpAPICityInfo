@@ -60,3 +60,55 @@ Content-Type: application/json
   "name": "Update - Central Park",
   "description": "Update - The most visited urban park in the United States."
 }
+
+
+PATCH http://localhost:5113/api/cities/1/pointsofinterest/1
+Content-Type: application/json
+
+[
+    {
+        "op": "replace",
+        "path": "/name",
+        "value": "Updated - Central Park"
+    }
+]
+
+GET http://localhost:5113/api/cities/1/pointsofinterest/1
+
+
+PATCH http://localhost:5113/api/cities/1/pointsofinterest/1
+Content-Type: application/json
+
+[
+    {
+        "op": "replace",
+        "path": "/name",
+        "value": "Updated - Central Park"
+    },
+    {
+        "op": "replace",
+        "path": "/description",
+        "value": "Updated - The most visited urban park in the United States."
+    }
+]
+
+PATCH http://localhost:5113/api/cities/1/pointsofinterest/1
+Content-Type: application/json
+
+[
+    {
+        "op": "replace",
+        "path": "/invalidproperty",
+        "value": "Updated - Central Park"
+    }
+]
+
+PATCH http://localhost:5113/api/cities/1/pointsofinterest/1
+Content-Type: application/json
+
+[
+    {
+        "op": "remove",
+        "path": "/name",
+    }
+]
