@@ -4,3 +4,14 @@ GET http://localhost:5113/api/cities/1
 GET http://localhost:5113/api/cities/2
 GET http://localhost:5113/api/people    # 404
 GET http://localhost:5113/api/cities/5  # 200 with null
+
+GET http://localhost:5113/api/cities/1/pointsofinterest
+GET http://localhost:5113/api/cities/10/pointsofinterest
+GET http://localhost:5113/api/cities/1/pointsofinterest/1
+GET http://localhost:5113/api/cities/1/pointsofinterest/10
+
+GET http://localhost:5113/api/cities
+Accept: application/json
+
+GET http://localhost:5113/api/cities
+Accept: application/xml
