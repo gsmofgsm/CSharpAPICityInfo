@@ -11,5 +11,17 @@ namespace CityInfo.Api.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int NumberOfPointsOfInterest
+        {
+            get
+            {
+                return PointsOfInterest.Count;
+            }
+        }
+
+        public ICollection<PointOfInterestDto> PointsOfInterest { get; set; }
+            = new List<PointOfInterestDto>();  
+        // when working collection, better initiate with null collection instead of null
+        // to avoid null reference issues
     }
 }
