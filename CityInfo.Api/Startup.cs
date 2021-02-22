@@ -24,10 +24,15 @@ namespace CityInfo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
+            else
             {
-                await context.Response.WriteAsync("Hello World!");
+                app.UseExceptionHandler();
+            }
+
+            app.Run((context) =>
+            {
+                //await context.Response.WriteAsync("Hello World!");
+                throw new Exception("Example exception");
             });
         }
     }
