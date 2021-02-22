@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CityInfo.Api.Controllers
 {
     [ApiController]
-    [Route("api/cities")]
+    [Route("api/[controller]")]
     public class CitiesController : ControllerBase
     {
         [HttpGet]
