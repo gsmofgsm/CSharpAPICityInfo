@@ -16,5 +16,11 @@ namespace CityInfo.Api.Controllers
         {
             return new JsonResult(CityDataStore.Current.Cities);
         }
+
+        [HttpGet("{id}")]
+        public JsonResult GetCity(int id)
+        {
+            return new JsonResult(CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == id));
+        }
     }
 }
