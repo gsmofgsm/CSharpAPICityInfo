@@ -112,3 +112,5 @@ Content-Type: application/json
         "path": "/name",
     }
 ]
+
+DELETE http://localhost:5113/api/cities/1/pointsofinterest/1
