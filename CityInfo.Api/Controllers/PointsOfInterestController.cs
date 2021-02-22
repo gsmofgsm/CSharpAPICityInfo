@@ -58,6 +58,27 @@ namespace CityInfo.Api.Controllers
             //    return BadRequest();
             //} // this is taken care of by ApiController Attribute
 
+            //if (pointOfInterest.Name == null)
+            //{
+            //    return BadRequest();
+            //} // better way: model attributes
+
+            if (pointOfInterest.Description == pointOfInterest.Name)
+            {
+                ModelState.AddModelError(
+                    "Description",  // key, could be property name, not must
+                    "The provided description should be different from the name");
+            } // add our custom validation in ModelState
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // ModelState will be deseriallized in the response body
+            }  
+            // the ApiController will do that for us in case of automatic validation by Attribute
+            // in case of custom added validation, we do need to check the ModelState
+            // because it is already too late for the ApiController to handle this
+            // model binding has already occurred
+
             var city = CityDataStore.Current.Cities
                 .FirstOrDefault(c => c.Id == cityId);
 
