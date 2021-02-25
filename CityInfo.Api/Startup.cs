@@ -50,7 +50,8 @@ namespace CityInfo.Api
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseStatusCodePages();
