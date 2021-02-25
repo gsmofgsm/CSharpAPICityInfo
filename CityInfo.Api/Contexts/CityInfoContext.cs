@@ -18,7 +18,7 @@ namespace CityInfo.Api.Contexts
         public CityInfoContext(DbContextOptions<CityInfoContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         } // another approach is to override the DbContext constructor, where a DbContextOptions get passed
 
         // how to connect DbContext to the database (configure it)?
