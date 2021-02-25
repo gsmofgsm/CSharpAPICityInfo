@@ -50,5 +50,17 @@ namespace CityInfo.Api.Services
         {
             return _context.Cities.Any(c => c.Id == cityId);
         }
+
+        public void AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest)
+        {
+            var city = GetCity(cityId, false);
+            city.PointsOfInterest.Add(pointOfInterest); // this doesn't persis yet. we just added it on the object context, the in-memory representation of our objects
+
+        }
+
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);  // SaveChanges returns number of entities that get changed
+        }
     }
 }

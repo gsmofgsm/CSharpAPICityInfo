@@ -21,5 +21,9 @@ namespace CityInfo.Api.Services
         PointOfInterest GetPointOfInterestForCity(int cityId, int pointOfInterestId);
 
         bool CityExists(int cityId);
+
+        void AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+
+        bool Save();
     }
 }
