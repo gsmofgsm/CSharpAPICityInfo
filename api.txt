@@ -1,6 +1,7 @@
 GET http://localhost:5113/api/cities
 
 GET http://localhost:5113/api/cities/1
+GET http://localhost:5113/api/cities/1?includePointsOfInterest=true
 GET http://localhost:5113/api/cities/2
 GET http://localhost:5113/api/people    # 404
 GET http://localhost:5113/api/cities/5  # 200 with null
