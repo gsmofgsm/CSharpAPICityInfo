@@ -114,3 +114,6 @@ Content-Type: application/json
 ]
 
 DELETE http://localhost:5113/api/cities/1/pointsofinterest/1
+
+# dummy controller to test Database created
+GET http://localhost:5113/api/testdatabase
