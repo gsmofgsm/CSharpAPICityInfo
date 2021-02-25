@@ -54,6 +54,7 @@ namespace CityInfo.Api
                 o.UseSqlServer(connectionString);
             });  // this will register it with scope lifetime
 
+            services.AddScoped<ICityInfoRepository, CityInfoRepository>(); // created once per request
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
