@@ -1,4 +1,5 @@
-﻿using CityInfo.Api.Contexts;
+﻿using AutoMapper;
+using CityInfo.Api.Contexts;
 using CityInfo.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,6 +56,8 @@ namespace CityInfo.Api
             });  // this will register it with scope lifetime
 
             services.AddScoped<ICityInfoRepository, CityInfoRepository>(); // created once per request
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());  // So all Profiles are ready for use
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
