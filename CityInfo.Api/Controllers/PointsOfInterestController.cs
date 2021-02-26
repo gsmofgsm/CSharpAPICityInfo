@@ -177,6 +177,10 @@ namespace CityInfo.Api.Controllers
             // it now has a modified state
             _cityInfoRepository.Save();
 
+            _cityInfoRepository.UpdatePointOfInterestForCity(cityId, pointOfInterestEntity);
+            // this will not execute any in this implementation of the repository
+            // but this is for if we in the future another implementation use
+
             return NoContent();  // successful, nothing to return
         }
 
