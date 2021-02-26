@@ -156,25 +156,26 @@ namespace CityInfo.Api.Controllers
                 return BadRequest(ModelState); // ModelState will be deseriallized in the response body
             }
 
-            var city = CityDataStore.Current.Cities
-                .FirstOrDefault(c => c.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
             // find point fo interest
-            var pointOfInterestFromStore = city.PointsOfInterest
-                .FirstOrDefault(p => p.Id == id);
+            var pointOfInterestEntity = _cityInfoRepository
+                .GetPointOfInterestForCity(cityId, id);
 
-            if (pointOfInterestFromStore == null)
+            if (pointOfInterestEntity == null)
             {
                 return NotFound();
             }
 
-            pointOfInterestFromStore.Name = pointOfInterest.Name;
-            pointOfInterestFromStore.Description = pointOfInterest.Description;
+            _mapper.Map(pointOfInterest, pointOfInterestEntity);
+            // AutoMapper will override the values in the destination object
+            // with those in the source object
+            // as the destination object is an entity tracked by our DBContext,
+            // it now has a modified state
+            _cityInfoRepository.Save();
 
             return NoContent();  // successful, nothing to return
         }
