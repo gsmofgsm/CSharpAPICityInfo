@@ -63,6 +63,11 @@ namespace CityInfo.Api.Services
 
         }
 
+        public void DeletePointOfInterest(PointOfInterest pointOfInterest)
+        {
+            _context.PointOfInterests.Remove(pointOfInterest);
+        }
+
         public bool Save()
         {
             return (_context.SaveChanges() >= 0);  // SaveChanges returns number of entities that get changed
