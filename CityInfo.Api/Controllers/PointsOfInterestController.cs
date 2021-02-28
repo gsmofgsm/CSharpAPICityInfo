@@ -188,29 +188,23 @@ namespace CityInfo.Api.Controllers
         public IActionResult PartiallyUpdatePointOfInterest(int cityId, int id,
             [FromBody] JsonPatchDocument<PointOfInterestForUpdateDto> pathDoc)
         {
-            var city = CityDataStore.Current.Cities
-                .FirstOrDefault(c => c.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
             // find point fo interest
-            var pointOfInterestFromStore = city.PointsOfInterest
-                .FirstOrDefault(p => p.Id == id);
+            var pointOfInterestEntity = _cityInfoRepository
+                .GetPointOfInterestForCity(cityId, id);
 
-            if (pointOfInterestFromStore == null)
+            if (pointOfInterestEntity == null)
             {
                 return NotFound();
             }
 
-            var pointOfInterestToPatch =
-                new PointOfInterestForUpdateDto()
-                {
-                    Name = pointOfInterestFromStore.Name,
-                    Description = pointOfInterestFromStore.Description
-                };
+            // PatchDocument works on UpdateDto, not the Entity
+            var pointOfInterestToPatch = _mapper
+                .Map<PointOfInterestForUpdateDto>(pointOfInterestEntity);
 
             pathDoc.ApplyTo(pointOfInterestToPatch, ModelState);
 
@@ -233,8 +227,11 @@ namespace CityInfo.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            pointOfInterestFromStore.Name = pointOfInterestToPatch.Name;
-            pointOfInterestFromStore.Description = pointOfInterestToPatch.Description;
+            _mapper.Map(pointOfInterestToPatch, pointOfInterestEntity);
+
+            _cityInfoRepository.UpdatePointOfInterestForCity(cityId, pointOfInterestEntity);
+
+            _cityInfoRepository.Save();
 
             return NoContent();
         }
